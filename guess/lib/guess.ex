@@ -16,8 +16,47 @@ defmodule Guess do
     IO.gets("Enter your choice: ")
     |>Integer.parse()
     |>parseInput()
-    |>getRange()
-    |>IO.inspect()
+    |>pickNumber()
+    |>play()
+  end
+
+  def play(pickedNumber) do
+    IO.gets("Alright mate, I've chosen a number. What is your guess? ")
+    |> parseInput()
+    |> guess(pickedNumber, 1)
+  end
+
+  def guess(userPick,pickedNumber,score) when userPick > pickedNumber do
+    IO.gets("Too high, try again: ")
+    |>parseInput()
+    |>guess(pickedNumber,score + 1)
+  end
+
+  def guess(userPick,pickedNumber,score) when userPick < pickedNumber do
+    IO.gets("Too low, try again: ")
+    |>parseInput()
+    |>guess(pickedNumber,score + 1)
+  end
+
+  def guess(userPick,pickedNumber,score) do
+    IO.puts("Well done mate, you guessed it in #{score} tries!")
+    showScore(score)
+  end
+
+  def showScore(score) when score > 7 do
+    IO.puts("Better luck next time")
+    endGame()
+  end
+
+  def showScore(score) do
+    {_, msg} = %{1..1 => "You're a mind reader!",
+      2..4 => "Most Impressive!",
+      5..7 => "You can do better than this! "}
+      |> Enum.find(fn {range, _} ->
+        Enum.member?(range, score)
+      end)
+      IO.puts(msg)
+    endGame()
   end
 
   def parseInput(:error), do: invalidInputError()
@@ -28,6 +67,17 @@ defmodule Guess do
     num
   end
 
+  def parseInput(data) do
+    data
+    |> Integer.parse()
+    |> parseInput()
+  end
+
+  def pickNumber(level) do
+    level
+    |> getRange()
+    |> Enum.random()
+  end
 
   def getRange(level) do
     case level do
