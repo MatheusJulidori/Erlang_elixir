@@ -12,7 +12,6 @@ defmodule Guess do
     IO.puts("1. Easy")
     IO.puts("2. Medium")
     IO.puts("3. Hard")
-    IO.puts("4. Exit")
     IO.gets("Enter your choice: ")
     |>Integer.parse()
     |>parseInput()
@@ -99,7 +98,6 @@ defmodule Guess do
       1 -> 1..10
       2 -> 1..100
       3 -> 1..1000
-      4 -> endGame()
       _ -> invalidInputError()
     end
   end
