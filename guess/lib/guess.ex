@@ -23,24 +23,39 @@ defmodule Guess do
   def play(pickedNumber) do
     IO.gets("Alright mate, I've chosen a number. What is your guess? ")
     |> parseInput()
-    |> guess(pickedNumber, 1)
+    |> guess(pickedNumber, 1 ,[])
   end
 
-  def guess(userPick,pickedNumber,score) when userPick > pickedNumber do
+  def guess(userPick,pickedNumber,score,list) when userPick > pickedNumber do
+    list = [ userPick | list] # adiciona o numero a lista de numeros ja usados
     IO.gets("Too high, try again: ")
     |>parseInput()
-    |>guess(pickedNumber,score + 1)
+    |>checkInput(list)
+    |>guess(pickedNumber,score + 1,list)
   end
 
-  def guess(userPick,pickedNumber,score) when userPick < pickedNumber do
+  def guess(userPick,pickedNumber,score,list) when userPick < pickedNumber do
+    list = [userPick | list ]  # adiciona o numero a lista de numeros ja usados
     IO.gets("Too low, try again: ")
     |>parseInput()
-    |>guess(pickedNumber,score + 1)
+    |>checkInput(list)
+    |>guess(pickedNumber,score + 1,list)
   end
 
-  def guess(userPick,pickedNumber,score) do
+  def guess(userPick,pickedNumber,score,list) do
+    list = [userPick | list] # adiciona o numero a lista de numeros ja usados
     IO.puts("Well done mate, you guessed it in #{score} tries!")
     showScore(score)
+  end
+
+  def checkInput(userPick,list) do
+    if Enum.member?(list,userPick) do
+      IO.gets("You already used that number, try again: ")
+      |>parseInput()
+      |>checkInput(list)
+    else
+      userPick
+    end
   end
 
   def showScore(score) when score > 7 do
