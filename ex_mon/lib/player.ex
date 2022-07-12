@@ -7,7 +7,7 @@ defmodule ExMon.Player do
 
   defstruct @struct_attributes
 
-  def build(name,move_rnd,move_avg,move_heal) do
+  def build(name, move_rnd, move_avg, move_heal) do
     %ExMon.Player{
       life: @max_life,
       move_avg: move_avg,
