@@ -12,6 +12,7 @@ defmodule ExMon.Game.Actions.Attack do
     |>Map.get(:life)
     |>calc_total_life(dmg)
     |>update_life(opponent)
+    |>update_game(opponent)
   end
 
   defp calc_power(:move_avg), do: Enum.random(@move_avg_power)
@@ -24,4 +25,11 @@ defmodule ExMon.Game.Actions.Attack do
     Game.fetch_player(player)
     |>Map.put(:life, life)
   end
+
+  defp update_game(player,opponent) do
+    Game.info()
+    |>Map.put(opponent, player)#opponent é a chave, player é o map
+    |>Game.update()
+  end
+
 end
