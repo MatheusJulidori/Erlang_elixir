@@ -14,7 +14,14 @@ defmodule ExMon do
   end
 
   def make_move(move) do
-    Actions.fetch_move(move)
+    Game.info()
+    |>Map.get(:status)
+    |>handle_status(move)
+  end
+
+  defp handle_status(:game_over, _move), do:  Status.print_round_message(Game.info())
+  defp handle_status(_other, move), do
+    |>Actions.fetch_move(move)
     |>do_move()
 
     computer_move(Game.info())
@@ -37,5 +44,5 @@ defmodule ExMon do
   end
 
   defp computer_move(_), do: :ok
-  
+
 end
