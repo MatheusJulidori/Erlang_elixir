@@ -21,7 +21,7 @@ defmodule ExMon.Game.Actions do
     end
   end
 
-  def heal(move) do
+  def heal() do
     case Game.turn() do
       :player -> Heal.heal_self(:player)
       :computer -> Heal.heal_self(:computer)

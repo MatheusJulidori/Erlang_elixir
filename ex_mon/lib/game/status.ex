@@ -24,10 +24,11 @@ defmodule ExMon.Game.Status do
   end
 
 
-  def print_move_message(player, move, damage) do
-    case move do
-    :attack -> IO.puts("\n#{player} got attacked for #{damage} damage!\n")
-    :heal -> IO.puts("\n#{player} heals for #{damage} life!\n")
-    end
+  def print_move_message(player, :attack, damage) do
+    IO.puts("\n#{player} got attacked for #{damage} damage!\n")
+  end
+
+  def print_move_message(player, :heal, life) do
+    IO.puts("\n#{player} healed #{life}HP!\n")
   end
 end
