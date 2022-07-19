@@ -23,8 +23,8 @@ defmodule ExMon.Game.Actions do
 
   def heal() do
     case Game.turn() do
-      :player -> Heal.heal_self(:player)
-      :computer -> Heal.heal_self(:computer)
+      :player -> Heal.heal_life(:player)
+      :computer -> Heal.heal_life(:computer)
     end
   end
 

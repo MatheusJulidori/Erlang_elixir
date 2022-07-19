@@ -6,18 +6,18 @@ defmodule ExMon.Game.Actions.Heal do
   @heal_power 18..25
 
   def heal_life(player) do
-    life = calc_heal_power()
+    heal = calc_heal()
 
     Game.fetch_player(player)
     |>Map.get(:life)
-    |>calc_total_life(life)
+    |>calc_total_life(heal)
     |>update_life(player)
   end
 
-  defp calc_heal(:move_avg), do: Enum.random(@heal_power)
+  defp calc_heal(), do: Enum.random(@heal_power)
 
-  defp calc_total_life(life, dmg) when life + heal > 100, do: 100
-  defp calc_total_life(life, dmg), do: life + heal
+  defp calc_total_life(life, heal) when life + heal > 100, do: 100
+  defp calc_total_life(life, heal), do: life + heal
 
   defp update_life(life,player) do
     Game.fetch_player(player)
